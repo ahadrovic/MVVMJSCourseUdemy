@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 3</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		.error{
+			font-size: 18px;
+			font-family: sans-serif;
+			font-weight: bold;
+			color: red;
+		}
+
+		.bad{
+				font-family: sans-serif;
+				font-size: 20px;
+				color: 	red;
+		}
+		.good{
+				font-family: sans-serif;
+				font-size: 20px;
+				color: 	green;
+		}
+		.medium{
+			font-family: sans-serif;
+				font-size: 20px;
+				color: 	yellow;
+		}
+	</style>
+</head>
+<body>
+	
+	<span data-bind="html:markup,visible: showElement(),css:{error:isError}" ></span>
+	<p data-bind = "css:{good:rating()>75,medium: rating() < 75 && rating() >= 50, bad:rating() <50}">RATING</p>
+	<p data-bind = "css:ratingStatus"> Rating 2	</p>
+	<p data-bind="style:{color:rating()<70 ? 'red':'green'}">Rating 3</p>
+	<a data-bind="attr:{href:link,title:ref}">MYSTERY PAGE</a>
+</body>
+<script type="text/javascript">
+	
+	var viewModel = function () {
+		this.obs = ko.observable('sample');
+		this.showElement= ko.observable(true);
+		this.isError = ko.observable(true);
+		this.rating = ko.observable(77);
+		this.ratingStatus = ko.pureComputed(function () {
+			if(this.rating() > 75){
+					return "good";
+			}
+			else if(this.rating() <75 && this.rating()>=50){
+					return "medium";
+			}
+			else{
+					return "bad";
+			}
+		},this);
+		this.link = ko.observable('http://www.google.com');
+		this.ref = ko.observable('mystery page!');
+		this.markup = ko.observable('<p> Message</p>');
+
+
+	}	
+
+
+	
+	ko.applyBindings(new viewModel());
+</script>
+</html>

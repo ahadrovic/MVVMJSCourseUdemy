@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mapping pt2</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" src= "scripts/knockout.js"></script>
+	<script type="text/javascript" src= "scripts/knockout.mapping-latest.js"></script>
+</head>
+<body>
+	
+	<h2 data-bind = "text:name"></h2>
+	<div data-bind = "foreach: visitedBy">
+		<p data-bind = "text: $data.user"></p>
+	</div>
+<div data-bind = "foreach: reviews">
+	<strong data-bind= "text:$data.user"></strong>:
+	<span data-bind = "text:$data.review"></span>
+	<br>
+</div>
+	
+</body>
+<script type="text/javascript">
+	var myPlace = {
+		name: "Burger Place",
+		lat: 12.2333344,
+		lng: 13.4434343,
+		type: "food",
+		visitedBy: [
+				{id: 1,user:"jSon"},
+				{id: 2,user:"jDoe"},
+				{id: 3, user: "bilboB"}
+		]
+	}
+
+	var placeReviews = {
+
+		reviews: [
+
+				{user: "jSon", review: "it was alright", stars:3},
+				{user: "bilboB", review: "it was bad", stars:1},
+				{user: "jDoe", review: "it was great", stars:5}
+		]
+
+	}
+	var mapping = {
+		'observe': ['visitedBy','name',],
+		'ignore': ['lat','lng']
+	}
+
+	var reviewsVm = ko.mapping.fromJS(placeReviews);
+	var vm = ko.mapping.fromJS(myPlace,mapping,reviewsVm)
+	
+	console.log(vm)
+	ko.applyBindings(vm);
+</script>
+</html>

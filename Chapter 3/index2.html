@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 3</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		p,button{
+			font-family: arial;
+		}
+		h3{
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<h3 data-bind = "text: clickCount" ></h3>
+	<button data-bind="click:incCount">CLICK</button>
+	<button data-bind="click:clickCount(0)">RESET</button>
+	<form data-bind = "submit:greetUser">
+				<label for="userInput">Observable Input</label>
+				<input type="text" data-bind = "textInput:username" name="userInput">
+				<button data-bind = "enable: username()" type="submit">Submit</button>
+	</form>
+
+	<div>	
+			<h1 data-bind = "text: testValue"></h1>
+			<input type="text" data-bind="textInput: testValue">
+	</div>
+
+	<div>
+		<input type="text" data-bind="hasFocus: bool()" name="">
+	</div>
+
+	<div>
+		<input type="checkbox" data-bind= "checked:sendNewsletter">
+		<strong style = "color:  orange; font-family: sans-serif;" data-bind="visible:sendNewsletter">You will receive newsletters</strong>
+	</div>
+
+	<div>
+		<h3>How did you like the movie?</h3>
+		<input type="radio" data-bind = "checkedValue: 'bad', checked:opinion">bad
+		<input type="radio" data-bind = "checkedValue: 'meh', checked:opinion">meh
+		<input type="radio" data-bind = "checkedValue: 'good', checked:opinion">good
+		<br>
+		<strong>It was...</strong><strong data-bind="visible:opinion,text:opinion"></strong>
+	</div>
+
+	<div>
+		<select multiple= "true" size="5" data-bind = "options: regions,selectedOptions:chosenRegions"></select>
+		<p data-bind= "text:chosenRegions"></p>
+	</div>
+
+	<div>
+		<p>
+			Name: <b data-bind="event:{mouseover:viewTip,mouseout:viewTip(false)},visible:!editable(),text:name, click:edit">&nbsp</b>
+			<input data-bind="visible: editable, value: name, hasFocus:editable" type="text" name="">
+		</p>
+		<p data-bind="visible:viewTip">Click the name to edit.</p>
+	</div>
+
+	<div>
+		<h2 data-bind = "uniqueName:true, text: $element.name">Test h2</h2>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var viewModel = function () {
+		
+			var self = this;
+			self.clickCount = ko.observable(0);
+			self.username = ko.observable("");
+			self.testValue	= ko.observable("")
+			self.bool = ko.observable(true);
+			self.regions = ko.observableArray(['NA','EU','Asia','Africa']);
+			self.chosenRegions = ko.observableArray([])
+			self.sendNewsletter = ko.observable(false);
+
+			self.name = ko.observable("Change me!");
+			self.editable = ko.observable(false);
+			self.viewTip = ko.observable(false);
+			self.edit = function () {
+				self.editable(true);
+			}
+
+			self.opinion=ko.observable("")
+
+			self.incCount = function () {
+				var prevCount = self.clickCount();
+				self.clickCount(prevCount + 1)
+			}
+			self.greetUser =  function () {
+				alert("hello,"+self.username()+"!");
+			}
+
+			self.focusMessage =  function (element) {
+				element.placeholder = "write something!";
+			}
+
+	}	
+
+
+	
+	ko.applyBindings(new viewModel());
+</script>
+</html>

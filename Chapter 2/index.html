@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 2</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		.inputForm {
+			margin: auto;
+			text-align: left;
+		}
+	</style>
+</head>
+<body>
+	<form class = "inputForm">
+		<label for = "fName">
+			First Name: <input type="text" name="fName" data-bind = "value:fName">
+		</label>
+		<br>
+		<label for = "lName">
+			Last Name: <input type="text" name="lName" data-bind = "value:lName">
+		</label>
+		<br>
+		<input type="button" value = "Submit" name="">
+	</form>
+
+	<div>
+		<h3>Your email: <strong data-bind="text:genEmail"></strong></h3>
+	</div>
+</body>
+<script type="text/javascript">
+	function emailViewModel() {
+		
+		var self = this;
+		self.fName = ko.observable('Tom');
+		self.lName = ko.observable('Jones');
+		self.genEmail = ko.computed(function(){
+			var res = self.fName() + "." + self.lName() + "@company.com";
+			return res.toLowerCase().replace(/\s+/g,'');
+		})
+	}
+	
+	ko.applyBindings(new emailViewModel);
+</script>
+</html>

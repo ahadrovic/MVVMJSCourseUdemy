@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 3</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	
+
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="1">ID</th>
+					<th colspan="3">First Name</th>
+					<th colspan="3">Last Name</th>
+					<th colspan="3">Username</th>
+					<th colspan="3">Email</th>
+				</tr>
+			</thead>
+			<tbody data-bind = "foreach: users">
+				<tr data-bind = "visible: email != 'N/A'">
+					<td colspan="1" data-bind="text:$index"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:$data.fname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:$data.lname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:$data.uname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:$data.email"></td>
+					<td><input type="button" data-bind ="click:$root.removeUser" value="remove"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<input type="button" data-bind="click:addUser" value = "add user" >
+
+	<div data-bind = "with:place">
+		<h2 data-bind = "text:name"></h2>
+		<span data-bind="with:coords">
+			<p data-bind = "text:lat"></p>
+			<p data-bind = "text:$rawData.lng"></p>
+			<h3 data-bind="text:$parent.name"></h3>
+			<h3 data-bind="text:$parentContext.$data.name"></h3>
+		</span>
+
+	</div>
+	<div>
+		<h1 id = "head_id" data-bind = "text: $element.id"></h1>
+		<h1 class = "headClass" data-bind= "text:$element.className"></h1>
+		<h1 name = "header1" data-bind = "text:$element.tagName"></h1>
+	</div>
+</body>
+<script type="text/javascript">
+	
+	var viewModel = function () {
+		
+		var self = this;
+
+		self.showHiddenMessage = ko.observable(false);
+		self.place = ko.observable({
+			name: "Pizza Place",
+			coords :{
+				lat: 40.7602383 ,
+				lng: -73.9840436
+			},
+			type: "food"
+		})
+		self.users = ko.observableArray([
+				{fname: "Robert",lname: "Plant", uname:"rplant" , email:"rplant@email.com" },
+				{fname: "Jimmy",lname: "Page", uname:"jpage" , email:"jpage@email.com" },
+				{fname: "John",lname: "John", uname:"jpjones" , email:"jpj@email.com" },
+				{fname: "John",lname: "Bonham", uname:"jbonham" , email:"N/A" }
+			])
+		self.addUser = function () {
+			self.users.push({
+				fname: "Jane",
+				lname: "Doe",
+				uname: "jdoe",
+				email: "jdoe@email.com"
+			})
+		};
+		this.removeUser = function () {
+			self.users.remove(this)
+		}
+
+	}	
+
+	//$
+
+	ko.applyBindings(new viewModel());
+</script>
+</html>

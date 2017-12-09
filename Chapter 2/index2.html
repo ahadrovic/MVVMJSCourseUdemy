@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		.error{
+			color: red;
+			font-size: 12pt;
+			font-family: sans-serif;
+		}
+	</style>
+</head>
+<body>
+	<div>
+		<span>
+			Enter password <input type = "password" data-bind="textInput:verifyInput">
+		</span>
+		<div class="error" data-bind="visible:!isValid(), text:errorMessage"></div>
+		<div>
+			(Accepted value: <span data-bind="text:acceptedValue"></span>)
+		</div>
+	</div>
+</body>
+<script type="text/javascript">
+	function inputValidationModel() {
+		this.acceptedValue = ko.observable("");
+		this.isValid = ko.observable(true);
+		this.errorMessage = ko.observable("")
+		this.verifyInput = ko.pureComputed({
+			read: this.acceptedValue,
+			write: function (input) {
+				if(input.length < 6){
+					this.isValid(false);
+					this.errorMessage("Password is too short!");
+				}
+				else if(input.length > 50){
+					this.isValid(false);
+					this.errorMessage("Password is too long!")
+				}
+				else if(input.search(/\d/) == -1){
+					this.isValid(false);
+					this.errorMessage("The password must contain at least 1 number!")
+				}
+				else if(input.search(/[a-zA-Z]/) == -1){
+					this.isValid(false);
+					this.errorMessage("The password must contain at least 1 letter")
+				}
+				else if(input.search(/[!@#$%^&*()_+\-=\[\]{};':"|,.<>?]/) == -1){
+					this.isValid(false);
+					this.errorMessage("The password must contain at least special character!")
+				}
+
+				else{
+					this.isValid(true);
+					this.acceptedValue(input);
+				}
+			},
+			owner:this
+		})
+	}
+	ko.applyBindings(new inputValidationModel());
+</script>
+</html>

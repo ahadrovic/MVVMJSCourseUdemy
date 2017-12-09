@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mapping</title>
+	<meta charset="utf-8">
+	<script type="text/javascript" data-main="scripts/main.js" src="scripts/require.js"></script>
+</head>
+<body>
+	
+	
+	
+</body>
+<script type="text/javascript">
+	var myPlace = {
+
+		name: "",
+		lat:0.0,
+		lng:0.0,
+		type:"cafe/bar",
+		//this  object contains an array of objects. 
+		//in updates, the entire array would be updated
+		visitedBy : [{id: 1 ,user:"hadronic"},
+					{id: 2, user:"bilbo"},
+					{id: 3, user:"jessical"}]
+
+	}
+
+	var placeReview = {
+
+		reviews : [
+					{user:"hadronic",review:"it was alright",stars:3},
+					{user:"bilbo",review:"great ambient",stars:4},
+					{user:"jessical",review:"very bad",stars:1},
+					{user:"jessical",review:"very bad",stars:1}
+
+					]
+					
+		};
+
+	ko.applyBindings();
+</script>
+</html>

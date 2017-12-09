@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 4</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		body, html{
+  			margin:0;
+  			padding:0;
+		}
+
+		.chat{
+			background-color: gray;
+			margin: 0;
+			padding: 10px;
+			width: 100%;
+			color: white;
+			font-family: sans-serif;
+		}
+
+		
+		#footer {
+ 		position:absolute;
+   		bottom:0;
+   		width:100%;
+   		height:60px;
+   		vertical-align: center;
+
+   		}
+
+   		#footer input{
+   			font-size: 24px;
+			height: 50%;
+			width: 92%;
+			margin-left: 20px;
+		
+		}
+
+		#footer button{
+			font-size: 24px;
+			height: 50%;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div id = "chatArea"></div>
+	<div id = "footer" data-bind = "component: {name:'chat-area',params:{username:'johnDoe'}}"></div>
+
+</body>
+<script type="text/javascript">
+	
+	var chatViewModel = function (params) {
+		this.username = params.username;
+		this.message = ko.observable("");
+		this.userDialogue = ko.observable(this.username + " says: ");	
+	}
+
+	chatViewModel.prototype.sendMessage = function () {
+		var p = document.createElement("p"); 
+				var h3 = document.createElement("h3");
+				var h3TextNode = document.createTextNode(this.username);
+				var pTextNode = document.createTextNode(this.message());
+				p.appendChild(pTextNode);
+				h3.appendChild(h3TextNode);
+				var div = document.getElementById("chatArea");
+				div.appendChild(h3);
+				div.appendChild(p);
+
+	}
+
+	var myTemplate = '<form data-bind = "submit: sendMessage">'
+				+'<input type="text" id="messageInput" data-bind = "textInput:message"/>'
+				+'<button data-bind = "enable:message">Send</button>'
+			+'</form>';
+
+	ko.components.register('chat-area',{
+		viewModel: chatViewModel,
+		template: myTemplate
+	})
+
+	ko.applyBindings();
+
+</script>
+</html>

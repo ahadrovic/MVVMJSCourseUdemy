@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 4</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		.welcome-banner{
+			font-family: sans-serif;
+			background-color: rgb(200,200,200);
+			margin: 0;
+			padding: 100px;
+			width: 100%;
+			color: white;
+
+		}
+	</style>
+</head>
+<body>
+	
+	<template id = "welcome-banner-template">
+		<div class = "welcome-banner">
+			<h1 data-bind ="text: welcomeUser"></h1>
+		</div>
+	</template>
+	
+	<welcome-banner params = "user:'johnDoe'"></welcome-banner>
+</body>
+
+<script type="text/javascript">
+	
+	ko.components.register('welcome-banner',{
+		viewModel: function (params) {
+			var self = this;
+			self.user = params.user;
+			self.welcomeUser = ko.computed(function () {
+
+				var date = new Date();
+				var currentHour = date.getHours();
+
+				if (currentHour >= 4 && currentHour < 12) {
+					return "Good Morning, " + self.user + "!";
+				}
+				if (currentHour >= 12 && currentHour< 18) {
+					return "Good Afternoon, " + self.user + "!";
+				}
+
+				return "Good Evening, " + self.user + "!";
+			})
+		},
+
+		template:{element:"welcome-banner-template"}
+	})
+
+	
+
+	ko.applyBindings();
+
+</script>
+</html>

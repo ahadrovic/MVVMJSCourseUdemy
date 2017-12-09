@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>5.1: Working with JSON Data</title>
+	<script type='text/javascript' src='scripts/knockout-3.4.2.js'></script>
+	<script type='text/javascript' src='scripts/jquery-3.2.1.min.js'></script>
+	<style type="text/css" media="screen">
+		
+	
+	</style>
+
+</head>
+
+<body>
+
+
+	<table>
+		<th>User name</th><th>Email</th><th>Age</th><th>Active?</th>
+		<tbody data-bind="foreach:users">
+			<tr>
+				<td data-bind="text:$data.uname"></td>
+				<td data-bind="text:$data.email"></td>
+				<td data-bind="text:$data.age"></td>
+				<td data-bind="text:$data.active"></td>
+			</tr>
+		</tbody>
+	</table>
+
+<button data-bind = "click:getUsers">click</button>
+</body>
+
+<script type="text/javascript" charset="utf-8" async defer>
+
+//need to test this 
+	function usersTableViewModel() {
+	
+	
+		var self = this;
+		self.users = ko.observableArray([]);
+		self.getUsers = function () {
+			$.getJSON('data/users.json',function (json,textStatus) {
+				self.users(json)
+			})
+		}
+	
+	}
+
+
+    ko.applyBindings(new usersTableViewModel());
+
+
+</script>
+
+</html>

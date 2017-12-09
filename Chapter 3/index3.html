@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Chapter 3</title>
+	<script type="text/javascript" src="scripts/knockout-3.4.2.js"></script>
+	<style type="text/css">
+		
+	</style>
+</head>
+<body>
+	
+	<h3 data-bind = "if: showHiddenMessage" style = "font-family: arial; color:orange;">Hidden Message!</h3>
+	<hr></hr>
+	<h3 data-bind = "ifnot: showHiddenMessage" style = "font-family: arial; color:green;">Hidden Message</h3>
+
+	<div>
+		<table>
+			<thead>
+				<tr>
+					<th colspan="3">First Name</th>
+					<th colspan="3">Last Name</th>
+					<th colspan="3">Username</th>
+					<th colspan="3">Email</th>
+				</tr>
+			</thead>
+			<tbody data-bind = "foreach: {data:users,as:'user'}">
+				<tr data-bind = "visible: email != 'N/A'">
+					<td colspan="3" rowspan="1" data-bind = "text:user.fname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:user.lname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:user.uname"></td>
+					<td colspan="3" rowspan="1" data-bind = "text:user.email"></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+</body>
+<script type="text/javascript">
+	
+	var viewModel = function () {
+		this.showHiddenMessage = ko.observable(false);
+		this.users = ko.observableArray([
+				{fname: "Robert",lname: "Plant", uname:"rplant" , email:"rplant@email.com" },
+				{fname: "Jimmy",lname: "Page", uname:"jpage" , email:"jpage@email.com" },
+				{fname: "John",lname: "John", uname:"jpjones" , email:"jpj@email.com" },
+				{fname: "John",lname: "Bonham", uname:"jbonham" , email:"N/A" }
+			])
+
+	}	
+
+	ko.applyBindings(new viewModel());
+</script>
+</html>

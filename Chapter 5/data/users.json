@@ -1,0 +1,16 @@
+[
+	{
+		"uname":"jDoe",
+		"email":"jdoe@gmail.com",
+		"age":"22",	
+		"active":"yes"
+	},
+
+	{
+		"uname":"jSon",
+		"email":"json@gmail.com",
+		"age":"33",	
+		"active":"no"
+	}
+
+]

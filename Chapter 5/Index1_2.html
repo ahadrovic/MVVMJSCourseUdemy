@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>5.1: Working with JSON Data</title>
+	<script type='text/javascript' src='scripts/knockout-3.4.2.js'></script>
+	<style type="text/css" media="screen">
+	</style>
+
+</head>
+
+<body>
+
+
+	<div>
+		<input type="text" name="" data-bind="value: placeName">
+		<input type="number" step = "0.000001" name="placeLat" data-bind="value:placeLat"/>
+		<input type="number" step = "0.000001" name="placeLng" data-bind="value:placeLng"/>
+		<select name="placeType" data-bind = "value: placeType">
+  			<option value="food">Food</option>
+  			<option value="cafe/bar">Cafe/Bar</option>
+  			<option value="shopping">Shopping</option>
+  			<option value="hotel/lodging">Hotel/Lodging</option>
+		</select> 
+	</div>
+	<br>
+	<div>
+		<p data-bind="text:ko.toJSON($rawData)"></p>
+		<button data-bind="click:showObj">Click</button>
+	</div>
+</body>
+
+<script type="text/javascript" charset="utf-8" async defer>
+
+	function formDataViewModel() {
+		this.placeName = ko.observable("burger place");
+		this.placeLat = ko.observable(0.000001);
+		this.placeLng = ko.observable(0.000001);
+		this.placeType = ko.observable("food");
+		this.showObj = function (data,event) {
+			var context = ko.contextFor(event.target);
+			console.log(ko.toJS(context.$rawData)); 
+		}
+
+	}
+	
+	ko.applyBindings(new formDataViewModel());
+	
+</script>
+
+</html>
